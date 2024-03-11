@@ -21,27 +21,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Antônio Pereira</td>
-                </tr>
-                <tr>
-                    <td>Maria Oliveira</td>
-                </tr>
-                <tr>
-                    <td>Carlos Santos</td>
-                </tr>
-                <tr>
-                    <td>Ana Souza</td>
-                </tr>
-                <tr>
-                    <td>Paulo Ferreira</td>
-                </tr>
-                <tr>
-                    <td>Lúcia Costa</td>
-                </tr>
-                <tr>
-                    <td>André Almeida</td>
-                </tr>
+                
             </tbody>
         </table>
         </div>
@@ -60,31 +40,28 @@
                 <tbody>
                   <tr>
                     <th>Nome:</th>
-                    <td id="nome"></td>
+                    <td id="nomeDt"></td>
                   </tr>
                   <tr>
                     <th>Sobrenome:</th>
-                    <td id="sobrenome"></td>
+                    <td id="sobrenomeDt"></td>
                   </tr>
                   <tr>
                     <th>E-mail:</th>
-                    <td id="email"></td>
+                    <td id="emailDt"></td>
                   </tr>
                   <tr>
                     <th>Telefone:</th>
-                    <td id="telefone"></td>
+                    <td id="telefoneDt"></td>
                   </tr>
                   <tr>
                     <th>Endereço:</th>
-                    <td id="endereco"></td>
+                    <td id="enderecoDt"></td>
                   </tr>
-                  <tr>
-                    <th>Data de Nascimento:</th>
-                    <td id="data-nascimento"></td>
-                  </tr>
+                  
                   <tr>
                     <th>Notas Adicionais:</th>
-                    <td id="notas"></td>
+                    <td id="notasDt"></td>
                   </tr>
                 </tbody>
             </table>
@@ -92,7 +69,7 @@
         </div>
         <div class="col-md-6 cadastrar">
             <h1>Cadastrar Contato</h1>
-            <form action="#" method="post">
+            <form class="cadastrarForm" action="#" method="#">
                 <div class="form-group">
                     <label for="nome">Nome</label>
                     <input type="text" class="form-control" id="nome">
@@ -114,19 +91,15 @@
                     <input type="text" class="form-control" id="endereco">
                 </div>
                 <div class="form-group">
-                    <label for="data-nascimento">Data de Nascimento</label>
-                    <input type="date" class="form-control" id="data-nascimento">
-                </div>
-                <div class="form-group">
                     <label for="notas">Notas Adicionais</label>
                     <textarea class="form-control" id="notas" rows="3"></textarea>
                 </div>
-                <button class="cancelar-btn btn btn-cancel">Cancelar</button>
-                <button type="submit" class="btn btn-primary">Cadastrar</button>
+                <button class="cancelar-btn btn btn-primary">Cancelar</button>
+                <button type="submit" class="cadastrar-btn btn btn-primary">Cadastrar</button>
             </form>
         </div>
         
-        <button class="cadastrar-btn">
+        <button class="novo-btn">
             <i class="fa-solid fa-plus"></i>
         </button>
         </div>

@@ -84,7 +84,7 @@ img {
     text-align: center;
 }
 
-.cadastrar-btn {
+.novo-btn {
   
     width: 2em;
     height: 2em;
@@ -99,7 +99,7 @@ img {
     transition: .2s;
 }
 
-.cadastrar-btn:hover {
+.novo-btn:hover {
     background-color: rgb(73, 128, 18);
     transform: translate(-5px, -5px);
 }
