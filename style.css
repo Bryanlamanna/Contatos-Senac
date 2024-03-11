@@ -1,0 +1,71 @@
+
+body {
+    background-color: rgb(226, 226, 226);
+}
+
+thead {
+    background-color: transparent;
+}
+
+td {
+    transition: .2s;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+td:hover{
+    background-color: rgb(143, 143, 121);
+    transform: translate(-5px, -5px);
+}
+
+.table {
+    width: 80%;
+    margin: 0 auto;
+    justify-content: left;
+    text-align: left;
+}
+
+.table-details {
+    text-align: left;
+}
+
+.lista {
+    text-align: center;
+    padding: 1em;
+    height: 100vh;
+
+    
+}
+
+.detalhes {
+    text-align: left;
+    padding: 1em;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+img {
+    border-radius: 100%;
+    width: 8em;
+}
+
+.hd-card {
+    display: flex;
+    text-align: left;
+}
+
+.hd-info {
+    padding-left: 1em;
+   
+}
+
+.nome {
+    font-weight: bold;
+    font-size: xx-large;
+}
+
+.telefone {
+    font-style: bold;
+    font-size: x-large;
+}
