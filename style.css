@@ -33,7 +33,7 @@ td:hover{
     text-align: center;
     padding: 1em;
     height: 100vh;
-
+    background-color: rgb(204, 204, 204);
     
 }
 
@@ -41,7 +41,7 @@ td:hover{
     text-align: left;
     padding: 1em;
     height: 100vh;
-    display: flex;
+    display: none;
     flex-direction: column;
 }
 
@@ -68,4 +68,42 @@ img {
 .telefone {
     font-style: bold;
     font-size: x-large;
+}
+
+.cadastrar {
+    display: none;
+    color: white;
+    position: fixed;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    background-color: rgb(97, 104, 110);
+    padding: 1em;
+    border-radius: 8px;
+    width: 50%;
+    text-align: center;
+}
+
+.cadastrar-btn {
+  
+    width: 2em;
+    height: 2em;
+    font-size: 2em;
+    border: none;
+    color: white;
+    position: fixed;
+    bottom: 5%;
+    right: 5%;
+    border-radius: 100%;
+    background-color: rgb(85, 146, 24);
+    transition: .2s;
+}
+
+.cadastrar-btn:hover {
+    background-color: rgb(73, 128, 18);
+    transform: translate(-5px, -5px);
+}
+
+.cancelar-btn {
+    background-color: rgb(175, 45, 45);
 }
