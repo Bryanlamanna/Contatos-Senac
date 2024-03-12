@@ -7,13 +7,13 @@ thead {
     background-color: transparent;
 }
 
-td {
+.table td {
     transition: .2s;
     cursor: pointer;
     border-radius: 8px;
 }
 
-td:hover{
+.table td:hover{
     background-color: rgb(143, 143, 121);
     transform: translate(-5px, -5px);
 }

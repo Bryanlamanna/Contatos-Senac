@@ -2,12 +2,52 @@ const novoBtn = document.querySelector('.novo-btn');
 const cadForm = document.querySelector('.cadastrar');
 const cancelarBtn = document.querySelector('.cancelar-btn');
 let cadFormShow = false;
-const contatos = document.querySelectorAll('.table td');
 const details = document.querySelector('.detalhes');
 const nameDetails = document.querySelector('.nome');
+const telefoneDetails = document.querySelector('.telefone');
+const sobrenomeDetails = document.querySelector('#sobrenomeDt');
+const emailDetails = document.querySelector('#emailDt');
+const enderecoDetails = document.querySelector('#enderecoDt');
+const notasDetails = document.querySelector('#notasDt');
 const cadastrarBtn = document.querySelector('.cadastrar-btn');
 let contatinhos = JSON.parse(localStorage.getItem('contatos')) || [];
 const formulario = document.querySelector('form');
+const tableContatos = document.querySelector('.table');
+const idc = document.querySelector('#idc');
+const deleteBtn = document.querySelector('#deletar');
+
+deleteBtn.addEventListener('click', () =>{
+
+    contatinhos.splice(idc.value, 1);
+
+    localStorage.setItem('contatos', JSON.stringify(contatinhos));
+
+    window.location.reload();
+});
+
+document.querySelector('.tabela-body').addEventListener('click', function(event) {
+    let elementoClicado = event.target;
+
+    // Verifica se o elemento clicado é uma celula da tabela
+    if (elementoClicado.tagName === 'TD') {
+        // Coloque aqui o código para exibir a mensagem ou qualquer ação desejada
+        let index = elementoClicado.parentNode.rowIndex;
+        
+        let contato = contatinhos[index- 1];
+
+        idc.value = index -1;
+
+        nameDetails.textContent = contato.nome;
+        telefoneDetails.textContent = contato.telefone;
+        sobrenomeDetails.textContent = contato.sobrenome;
+        emailDetails.textContent = contato.email;
+        enderecoDetails.textContent = contato.endereco;
+        notasDetails.textContent = contato.notas;
+        
+        details.style.display = 'block';
+
+    }
+})
 
 cancelarBtn.addEventListener('click', () => {
         formulario.reset();
@@ -25,15 +65,7 @@ novoBtn.addEventListener('click', () => {
     }
 })
 
-for (let i = 0; i < contatos.length; i++) {
-    contatos[i].addEventListener('click', () => {
-        details.style.display = 'block';
-        let name = contatos[i].textContent
-        nameDetails.textContent = name;
-    })
-}
-
-function cadastrar(event) {
+function cadastrar() {
     event.preventDefault();
 
     let id;
@@ -61,19 +93,26 @@ function cadastrar(event) {
         notas: notas
     }
 
-    formulario.reset();
+    if (checkBlanks(contato)) {
+        formulario.reset();
 
-    if (contatinhos === null) {
-        contatinhos = [];
-    }
-
-    contatinhos.push(contato);
-
-    console.log(contatinhos);
-
-    localStorage.setItem('contatos', JSON.stringify(contatinhos));
-
+        if (contatinhos === null) {
+            contatinhos = [];
+        }
     
+        contatinhos.push(contato);
+    
+        console.log(contatinhos);
+    
+        localStorage.setItem('contatos', JSON.stringify(contatinhos));
+    
+        window.location.reload();
+
+        
+    } else {
+        alert('Por favor, preencha todos os campos');
+    }
+   
 }
 
 function carregarContatos() {
@@ -95,6 +134,8 @@ function carregarContatos() {
     
             // Cria uma célula de dados (td) para conter o nome
             let novaCelula = document.createElement('td');
+
+            novaCelula.classList.add('td-nome');
     
             // Define o texto dentro da célula de dados (td)
             novaCelula.textContent = contato.nome;
@@ -110,7 +151,16 @@ function carregarContatos() {
     
 }
 
-formulario.addEventListener('submit', cadastrar);
+
+function checkBlanks(contato) {
+    
+    if (contato.nome === '' || contato.sobrenome === '' || contato.email === '' || contato.telefone === '' || contato.endereco === '') {
+        return false;
+    }
+        return true;
+}
+
+cadastrarBtn.addEventListener('click', cadastrar);
 
 carregarContatos()
 

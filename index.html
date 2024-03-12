@@ -20,7 +20,7 @@
                     <th style="background-color: transparent;">Nome</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="tabela-body">
                 
             </tbody>
         </table>
@@ -36,12 +36,9 @@
                     </div>
                     
             </div>
+
             <table class="table-details">
-                <tbody>
-                  <tr>
-                    <th>Nome:</th>
-                    <td id="nomeDt"></td>
-                  </tr>
+                <tbody>                  
                   <tr>
                     <th>Sobrenome:</th>
                     <td id="sobrenomeDt"></td>
@@ -50,10 +47,7 @@
                     <th>E-mail:</th>
                     <td id="emailDt"></td>
                   </tr>
-                  <tr>
-                    <th>Telefone:</th>
-                    <td id="telefoneDt"></td>
-                  </tr>
+                 
                   <tr>
                     <th>Endereço:</th>
                     <td id="enderecoDt"></td>
@@ -65,6 +59,9 @@
                   </tr>
                 </tbody>
             </table>
+            <input style="visibility: hidden;" type="number" id="idc">
+            <button class="btn btn-danger" id="deletar">Deletar</button>
+            <button class="btn btn-warning" id="editar">Editar</button>
 
         </div>
         <div class="col-md-6 cadastrar">
@@ -94,7 +91,7 @@
                     <label for="notas">Notas Adicionais</label>
                     <textarea class="form-control" id="notas" rows="3"></textarea>
                 </div>
-                <button class="cancelar-btn btn btn-primary">Cancelar</button>
+                <button class="cancelar-btn btn btn-danger">Cancelar</button>
                 <button type="submit" class="cadastrar-btn btn btn-primary">Cadastrar</button>
             </form>
         </div>
