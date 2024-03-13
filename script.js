@@ -82,7 +82,7 @@ deleteBtn.addEventListener('click', () =>{
     let confirmation = confirm('Tem certeza que deseja deletar este contato?');
 
     if(confirmation == true){
-        contatinhos.splice(idc.value, 1);
+        contatinhos.splice(idc.value-1, 1);
 
         localStorage.setItem('contatos', JSON.stringify(contatinhos));
     
@@ -278,20 +278,20 @@ function localizarContato(id) {
 }
 
 function buscarContatos() {
-
     let resultados = [];
-
-    let nomeBuscado = document.querySelector('#pesquisar').value;
+    let nomeBuscado = document.querySelector('#pesquisar').value.toLowerCase(); // Convertendo o valor da busca para minúsculas para comparação de caso insensível
 
     for (let i = 0; i < contatinhos.length; i++) {
         let contato = contatinhos[i];
-        if (contato.nome === nomeBuscado) {
-            resultados.push(contato);      
-        } 
+        // Verifica se algum dos campos do contato contém a string buscada (ignorando maiúsculas/minúsculas)
+        if (contato.nome.toLowerCase().includes(nomeBuscado) || 
+            contato.sobrenome.toLowerCase().includes(nomeBuscado) || 
+            contato.email.toLowerCase().includes(nomeBuscado)) {
+            resultados.push(contato); // Adiciona o contato aos resultados
+        }
     }
 
     carregarResultados(resultados);
-
 }
 
 function carregarResultados(resultados) {
