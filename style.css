@@ -84,6 +84,20 @@ img {
     text-align: center;
 }
 
+.editar {
+    display: none;
+    color: white;
+    position: fixed;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    background-color: rgb(97, 104, 110);
+    padding: 1em;
+    border-radius: 8px;
+    width: 50%;
+    text-align: center;
+}
+
 .novo-btn {
   
     width: 2em;

@@ -1,7 +1,9 @@
 const novoBtn = document.querySelector('.novo-btn');
 const cadForm = document.querySelector('.cadastrar');
 const cancelarBtn = document.querySelector('.cancelar-btn');
+const edForm = document.querySelector('.editar');
 let cadFormShow = false;
+let edFormShow = false;
 const details = document.querySelector('.detalhes');
 const nameDetails = document.querySelector('.nome');
 const telefoneDetails = document.querySelector('.telefone');
@@ -11,18 +13,67 @@ const enderecoDetails = document.querySelector('#enderecoDt');
 const notasDetails = document.querySelector('#notasDt');
 const cadastrarBtn = document.querySelector('.cadastrar-btn');
 let contatinhos = JSON.parse(localStorage.getItem('contatos')) || [];
-const formulario = document.querySelector('form');
+const formularioCad = document.querySelector('.cadastrarForm');
+const formularioEd = document.querySelector('.editarForm');
 const tableContatos = document.querySelector('.table');
 const idc = document.querySelector('#idc');
 const deleteBtn = document.querySelector('#deletar');
+const editBtn = document.querySelector('#editar');
+const salvarEd = document.querySelector('.editar-btn');
+const cancelEd = document.querySelector('.cancelar-ed-btn');
+
+cancelEd.addEventListener('click', ()=>{
+    edForm.style.display = 'none';
+    edFormShow = false;
+})
+
+salvarEd.addEventListener('click', ()=>{
+    let index = idc.value;
+    console.log(index)
+    editarContato(index);
+    window.location.reload();
+})
+
+editBtn.addEventListener('click', ()=>{
+    
+    edFormShow = !edFormShow;
+
+    if(edFormShow){
+
+        let index = idc.value;
+
+        let contato = contatinhos[index];
+
+        document.querySelector('#nomeEd').value = contato.nome;
+        document.querySelector('#sobrenomeEd').value = contato.sobrenome;
+        document.querySelector('#emailEd').value = contato.email;
+        document.querySelector('#telefoneEd').value = contato.telefone;
+        document.querySelector('#enderecoEd').value = contato.endereco;
+        document.querySelector('#notasEd').value = contato.notas;
+
+        edForm.style.display = 'block';
+
+
+    } else {
+        edForm.style.display = 'none';
+    }
+
+})
 
 deleteBtn.addEventListener('click', () =>{
 
-    contatinhos.splice(idc.value, 1);
+    let confirmation = confirm('Tem certeza que deseja deletar este contato?');
 
-    localStorage.setItem('contatos', JSON.stringify(contatinhos));
+    if(confirmation == true){
+        contatinhos.splice(idc.value, 1);
 
-    window.location.reload();
+        localStorage.setItem('contatos', JSON.stringify(contatinhos));
+    
+        window.location.reload();
+    } else {
+        return;
+    }
+    
 });
 
 document.querySelector('.tabela-body').addEventListener('click', function(event) {
@@ -50,7 +101,7 @@ document.querySelector('.tabela-body').addEventListener('click', function(event)
 })
 
 cancelarBtn.addEventListener('click', () => {
-        formulario.reset();
+        formularioCad.reset();
         cadForm.style.display = 'none';
         cadFormShow = false;
 })
@@ -94,7 +145,7 @@ function cadastrar() {
     }
 
     if (checkBlanks(contato)) {
-        formulario.reset();
+        formularioCad.reset();
 
         if (contatinhos === null) {
             contatinhos = [];
@@ -151,6 +202,36 @@ function carregarContatos() {
     
 }
 
+async function editarContato(id) {
+    let contato = contatinhos[id];
+
+    let nome = document.querySelector('#nomeEd').value;
+    let sobrenome = document.querySelector('#sobrenomeEd').value;
+    let email = document.querySelector('#emailEd').value;
+    let telefone = document.querySelector('#telefoneEd').value;
+    let endereco = document.querySelector('#enderecoEd').value;
+    let notas = document.querySelector('#notasEd').value;
+
+    contato.nome = nome;
+    contato.sobrenome = sobrenome;
+    contato.email = email;
+    contato.telefone = telefone;
+    contato.endereco = endereco;
+    contato.notas = notas;
+
+    if (checkBlanks(contato)) {
+        formularioEd.reset();
+        contatinhos[id] = contato;
+        localStorage.setItem('contatos', JSON.stringify(contatinhos));
+        alert('Contato editado com sucesso!');
+        await new Promise(resolve => setTimeout(resolve, 100)); // Aguarda 100ms antes de recarregar a página
+        window.location.reload();
+    } else {
+        alert('Por favor, preencha todos os campos');
+    }
+}
+
+
 
 function checkBlanks(contato) {
     
@@ -161,6 +242,8 @@ function checkBlanks(contato) {
 }
 
 cadastrarBtn.addEventListener('click', cadastrar);
+
+
 
 carregarContatos()
 
