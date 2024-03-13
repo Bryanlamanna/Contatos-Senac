@@ -70,6 +70,20 @@ img {
     font-size: x-large;
 }
 
+#pesquisar {
+    width: 40%;
+}
+
+.hidden {
+    display: none;
+}
+
+.search {
+    width: auto;
+    display: flex;
+    justify-content: center;
+}
+
 .cadastrar {
     display: none;
     color: white;

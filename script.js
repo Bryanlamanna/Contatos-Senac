@@ -21,6 +21,23 @@ const deleteBtn = document.querySelector('#deletar');
 const editBtn = document.querySelector('#editar');
 const salvarEd = document.querySelector('.editar-btn');
 const cancelEd = document.querySelector('.cancelar-ed-btn');
+const pesquisar = document.querySelector('#pesquisar');
+const searchBtn = document.querySelector('.search-btn');
+
+console.log(contatinhos)
+
+pesquisar.addEventListener('keyup', function(event){
+
+    if (event.keyCode === 13){
+        buscarContatos();
+    }
+    
+})
+
+searchBtn.addEventListener('click', ()=>{
+    buscarContatos();
+    pesquisar.value = '';    
+})
 
 cancelEd.addEventListener('click', ()=>{
     edForm.style.display = 'none';
@@ -42,7 +59,7 @@ editBtn.addEventListener('click', ()=>{
 
         let index = idc.value;
 
-        let contato = contatinhos[index];
+        let contato = localizarContato(index);
 
         document.querySelector('#nomeEd').value = contato.nome;
         document.querySelector('#sobrenomeEd').value = contato.sobrenome;
@@ -79,26 +96,40 @@ deleteBtn.addEventListener('click', () =>{
 document.querySelector('.tabela-body').addEventListener('click', function(event) {
     let elementoClicado = event.target;
 
-    // Verifica se o elemento clicado é uma celula da tabela
+    // Verifica se o elemento clicado é uma célula da tabela
     if (elementoClicado.tagName === 'TD') {
-        // Coloque aqui o código para exibir a mensagem ou qualquer ação desejada
-        let index = elementoClicado.parentNode.rowIndex;
+        // Obtém a linha (tr) pai do elemento clicado
+        let linha = elementoClicado.parentNode;
+
+        // Obtém a célula oculta (segunda célula) da mesma linha
+        let celulaId = linha.querySelector('.hidden');
+
+        // Obtém o ID do contato da célula oculta
+        let idContato = celulaId.textContent;
+
         
-        let contato = contatinhos[index- 1];
 
-        idc.value = index -1;
+        // Encontra o contato correspondente pelo ID
+        let contato = localizarContato(idContato);
 
-        nameDetails.textContent = contato.nome;
-        telefoneDetails.textContent = contato.telefone;
-        sobrenomeDetails.textContent = contato.sobrenome;
-        emailDetails.textContent = contato.email;
-        enderecoDetails.textContent = contato.endereco;
-        notasDetails.textContent = contato.notas;
-        
-        details.style.display = 'block';
 
+        // Verifica se o contato foi encontrado
+        if (contato) {
+            // Atualiza os detalhes com as informações do contato
+            idc.value = idContato;
+            nameDetails.textContent = contato.nome;
+            telefoneDetails.textContent = contato.telefone;
+            sobrenomeDetails.textContent = contato.sobrenome;
+            emailDetails.textContent = contato.email;
+            enderecoDetails.textContent = contato.endereco;
+            notasDetails.textContent = contato.notas;
+            
+            details.style.display = 'block'; // Exibe os detalhes
+        } else {
+            console.log('Contato não encontrado!');
+        }
     }
-})
+});
 
 cancelarBtn.addEventListener('click', () => {
         formularioCad.reset();
@@ -167,39 +198,28 @@ function cadastrar() {
 }
 
 function carregarContatos() {
-    
-    if (contatinhos.length < 0) {
+    if (contatinhos.length === 0) { // Correção na verificação de lista vazia
         return;
-        
-    }
-  
-        for (let i = 0; i < contatinhos.length; i++) {
-        
-            let contato = contatinhos[i];
-    
-            // Seleciona a tabela
-            let tabela = document.querySelector('.table');
-    
-            // Cria um novo elemento de linha (tr)
-            let novaLinha = document.createElement('tr');
-    
-            // Cria uma célula de dados (td) para conter o nome
-            let novaCelula = document.createElement('td');
-
-            novaCelula.classList.add('td-nome');
-    
-            // Define o texto dentro da célula de dados (td)
-            novaCelula.textContent = contato.nome;
-    
-            // Adiciona a célula de dados à linha
-            novaLinha.appendChild(novaCelula);
-    
-            // Adiciona a linha à tabela
-            tabela.querySelector('tbody').appendChild(novaLinha);
-    
     }
 
-    
+    for (let i = 0; i < contatinhos.length; i++) {
+        let contato = contatinhos[i];
+        let tabela = document.querySelector('.table');
+        let novaLinha = document.createElement('tr');
+
+        // Célula de dados para o nome do contato
+        let novaCelulaNome = document.createElement('td');
+        novaCelulaNome.textContent = contato.nome;
+        novaLinha.appendChild(novaCelulaNome);
+
+        // Célula de dados para o ID do contato (oculta)
+        let novaCelulaId = document.createElement('td');
+        novaCelulaId.textContent = contato.id;
+        novaCelulaId.classList.add('hidden'); // Adiciona uma classe para torná-la oculta
+        novaLinha.appendChild(novaCelulaId);
+
+        tabela.querySelector('tbody').appendChild(novaLinha);
+    }
 }
 
 async function editarContato(id) {
@@ -231,8 +251,6 @@ async function editarContato(id) {
     }
 }
 
-
-
 function checkBlanks(contato) {
     
     if (contato.nome === '' || contato.sobrenome === '' || contato.email === '' || contato.telefone === '' || contato.endereco === '') {
@@ -241,9 +259,73 @@ function checkBlanks(contato) {
         return true;
 }
 
+function limparTabela() {
+
+    let tbody = document.querySelector('.table tbody');
+    tbody.innerHTML = '';
+}
+
+function localizarContato(id) {
+
+    for (let i = 0; i < contatinhos.length; i++) {
+        var contato = contatinhos[i];
+        if (contato.id.toString() === id) {
+            
+            return contato;
+        } 
+    }
+    return null;
+}
+
+function buscarContatos() {
+
+    let resultados = [];
+
+    let nomeBuscado = document.querySelector('#pesquisar').value;
+
+    for (let i = 0; i < contatinhos.length; i++) {
+        let contato = contatinhos[i];
+        if (contato.nome === nomeBuscado) {
+            resultados.push(contato);      
+        } 
+    }
+
+    carregarResultados(resultados);
+
+}
+
+function carregarResultados(resultados) {
+
+    limparTabela();
+
+    for (let i = 0; i < resultados.length; i++) {
+        
+        let contato = resultados[i];
+
+        // Seleciona a tabela
+        let tabela = document.querySelector('.table');
+
+        // Cria um novo elemento de linha (tr)
+        let novaLinha = document.createElement('tr');
+
+        // Célula de dados para o nome do contato
+        let novaCelulaNome = document.createElement('td');
+        novaCelulaNome.textContent = contato.nome;
+        novaLinha.appendChild(novaCelulaNome);
+
+        // Célula de dados para o ID do contato (oculta)
+        let novaCelulaId = document.createElement('td');
+        novaCelulaId.textContent = contato.id;
+        novaCelulaId.classList.add('hidden'); // Adiciona uma classe para torná-la oculta
+        novaLinha.appendChild(novaCelulaId);
+
+        tabela.querySelector('tbody').appendChild(novaLinha)
+}
+
+
+}
+
 cadastrarBtn.addEventListener('click', cadastrar);
-
-
 
 carregarContatos()
 
